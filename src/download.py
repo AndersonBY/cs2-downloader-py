@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:02:02
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-12 19:23:55
+# @Last Modified time: 2023-09-12 19:27:29
 import re
 import os
 import json
@@ -59,8 +59,7 @@ class Downloader:
 
     @staticmethod
     async def needs_update():
-        version_string = await Downloader.read_online_string(f"{config['resources_base_url']}version.txt")
-        latest_version = re.search(r"current_version = \"(.*)\"", version_string).group(1)
+        latest_version = await Downloader.read_online_string(f"{config['resources_base_url']}version.txt")
         return config["current_version"] != latest_version
 
     @staticmethod
