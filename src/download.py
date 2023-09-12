@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:02:02
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-12 19:03:24
+# @Last Modified time: 2023-09-12 19:23:55
 import re
 import os
 import json
@@ -12,6 +12,11 @@ import urllib.request
 from pathlib import Path
 
 import httpx
+
+from translate import Translator
+
+translator = Translator()
+t = translator.t
 
 with open("./config.json", "r") as f:
     config = json.load(f)
@@ -36,11 +41,14 @@ class Downloader:
 
     @staticmethod
     async def download_file(url, output_file):
-        async with httpx.AsyncClient(follow_redirects=True, proxies=Downloader.proxies) as client:
-            response = await client.get(url)
-            response.raise_for_status()
-            with open(output_file, "wb") as f:
-                f.write(response.content)
+        try:
+            async with httpx.AsyncClient(follow_redirects=True, proxies=Downloader.proxies) as client:
+                response = await client.get(url)
+                response.raise_for_status()
+                with open(output_file, "wb") as f:
+                    f.write(response.content)
+        except Exception as e:
+            print(t("Error while downloading"), url, str(e))
 
     @staticmethod
     async def read_online_string(url):
@@ -100,6 +108,7 @@ class Downloader:
             "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/Start%20Server.bat",
             "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/Workshop%20Tools%20-%20RAYTRACING.bat",
             "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/Workshop%20Tools.bat",
+            f"{config['resources_base_url']}启动CS2.bat",
         ]
 
         file_paths = [
@@ -112,6 +121,7 @@ class Downloader:
             cs2_target_path / "Start Server.bat",
             cs2_target_path / "Workshop Tools - RAYTRACING.bat",
             cs2_target_path / "Workshop Tools.bat",
+            cs2_target_path / "启动CS2.bat",
         ]
 
         replace_exception_list = ["banList.lua"]

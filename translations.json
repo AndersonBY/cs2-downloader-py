@@ -4,12 +4,13 @@
         "Prepared Download!": "下载准备完成！",
         "Starting Download...": "正在开始下载...",
         "Finished Download!. Starting Patches...": "下载完成！正在开始安装补丁...",
-        "Do you want to install the Movement Patch?(This is recommended for bhop/surf servers for better movement)\nPress 'Y' for 'Yes' or 'N' for 'No' on your keyboard": "你想安装移动补丁吗？（这是推荐的bhop/surf服务器的更好的移动）\n按下键盘上的'Y'代表'是'或'N'代表'否'",
+        "Do you want to install the Movement Patch?(This is recommended for bhop/surf servers for better movement)\nPress 'Y' for 'Yes' or 'N' for 'No' on your keyboard": "你想安装移动补丁吗？（bhop/surf服务器推荐安装）\n按下键盘上的'Y'代表'是'或'N'代表'否'",
         "Finished Patches! Starting Client-Mod Patches... This can take a long time...": "补丁安装完成！正在开始客户端补丁... 这可能需要很长时间...",
         "Download complete! Press 'Enter' to close the installer!": "下载完成！按下'回车'关闭安装程序！",
         "failed to patch steam check": "无法安装steam检查补丁",
         "failed to patch version check": "无法安装版本检查补丁",
-        "failed to patch movement clamp": "无法安装移动限制补丁"
+        "failed to patch movement clamp": "无法安装移动限制补丁",
+        "Error while downloading": "下载时出错"
     },
     "en-US": {}
 }
