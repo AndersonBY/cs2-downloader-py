@@ -2,10 +2,11 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:12:40
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-12 17:49:11
+# @Last Modified time: 2023-09-13 02:47:31
 import os
-import re
+import mmap
 import json
+import shutil
 from pathlib import Path
 
 from translate import Translator
@@ -29,6 +30,8 @@ class Patcher:
             b"\x6C\x69\x6D\x69\x74\x65\x64\x62\x65\x74\x61",
             b"\x66\x75\x6C\x6C\x76\x65\x72\x73\x69\x6F\x6E",
         ]
+
+        Patcher.backup_files(cs2_target_path / "game/csgo/bin/win64/client.dll")
 
         if not Patcher.replace_bytes(
             cs2_target_path / "game/csgo/bin/win64/client.dll", steam_check_bytes[0], steam_check_bytes[1]
@@ -65,22 +68,37 @@ class Patcher:
         return True
 
     @staticmethod
+    def backup_files(file):
+        if not Path(file).exists():
+            return False
+
+        backup_file = Path(file).parent / (Path(file).name + ".bak")
+        if Path(backup_file).exists():
+            os.remove(backup_file)
+
+        shutil.copyfile(file, backup_file)
+        return True
+
+    @staticmethod
     def clean_patch_files():
         for file in [
             cs2_target_path / "game/csgo/bin/win64/client.dll",
             cs2_target_path / "game/csgo/bin/win64/server.dll",
         ]:
-            if os.path.exists(file):
-                os.remove(file)
+            if file.exists():
+                file.unlink()
 
     @staticmethod
     def replace_bytes(filename, search_pattern, replace_bytes):
-        with open(filename, "rb") as file:
-            content = file.read()
-
-        content = re.sub(search_pattern, replace_bytes, content)
-
-        with open(filename, "wb") as file:
-            file.write(content)
-
-        return True
+        try:
+            with open(filename, "r+b") as f:
+                mm = mmap.mmap(f.fileno(), 0)
+                pos = mm.find(search_pattern)
+                if pos == -1:
+                    print("patcher out of date, report this to nebel: %s | %i" % (filename, len(search_pattern)))
+                    return False
+                mm[pos : pos + len(search_pattern)] = replace_bytes
+            return True
+        except IOError:
+            print("failed to open: %s" % filename)
+            return False

@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:02:02
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-12 19:27:29
+# @Last Modified time: 2023-09-13 02:48:23
 import re
 import os
 import json
@@ -35,9 +35,34 @@ def get_proxy():
     return proxies
 
 
+def get_cs2_target_path():
+    cs2_target_path = config["cs2_target_path"]
+    cs2_target_path_valid = len(cs2_target_path) != 0
+    while not cs2_target_path_valid:
+        if len(cs2_target_path) == 0:
+            print(t("Please enter your CS:GO installation path"))
+            print(
+                t(
+                    "For example like D:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive"
+                )
+            )
+            cs2_target_path = input(t("> ")).strip().strip("\\").strip("/")
+        if not cs2_target_path.endswith("Counter-Strike Global Offensive"):
+            print(t("Invalid CS:GO installation path! Should end with 'Counter-Strike Global Offensive'"))
+            cs2_target_path = ""
+        else:
+            cs2_target_path_valid = True
+            with open("./config.json", "w") as f:
+                config["cs2_target_path"] = cs2_target_path
+                json.dump(config, f, indent=4)
+
+    return Path(cs2_target_path)
+
+
 class Downloader:
-    steam_downloader_v2_path = Path("./SteamDownloaderV2")
     proxies = get_proxy()
+    steam_downloader_v2_path = Path("./SteamDownloaderV2")
+    cs2_target_path = get_cs2_target_path()
 
     @staticmethod
     async def download_file(url, output_file):
@@ -91,7 +116,8 @@ class Downloader:
         manifest_folder = Downloader.steam_downloader_v2_path / "manifests"
         depot_keys = Downloader.steam_downloader_v2_path / "depot_keys.json"
         exe_path = Downloader.steam_downloader_v2_path / "SteamDownloader.exe"
-        cmd = f"{exe_path.absolute()} --target {config['cs2_target_path']} --manifests {manifest_folder.absolute()} --depot_keys {depot_keys.absolute()}"
+        cmd = f'"{exe_path.absolute()}" --remove_files=False --target "{Downloader.cs2_target_path.absolute()}" --manifests "{manifest_folder.absolute()}" --depot_keys "{depot_keys.absolute()}"'
+        print(cmd)
         subprocess.run(cmd, shell=True)
 
     @staticmethod

@@ -4,13 +4,22 @@
         "Prepared Download!": "下载准备完成！",
         "Starting Download...": "正在开始下载...",
         "Finished Download!. Starting Patches...": "下载完成！正在开始安装补丁...",
-        "Do you want to install the Movement Patch?(This is recommended for bhop/surf servers for better movement)\nPress 'Y' for 'Yes' or 'N' for 'No' on your keyboard": "你想安装移动补丁吗？（bhop/surf服务器推荐安装）\n按下键盘上的'Y'代表'是'或'N'代表'否'",
-        "Finished Patches! Starting Client-Mod Patches... This can take a long time...": "补丁安装完成！正在开始客户端补丁... 这可能需要很长时间...",
+        "Do you want to install the Movement Patch?(This is recommended for bhop/surf servers for better movement) (y/N))": "你想安装移动补丁吗？（bhop/surf服务器推荐安装）(y/N))",
+        "Do you want to install Client-Mod Patches? (Y/n)": "你想安装客户端 Mod 补丁吗？（Y/n）",
+        "Starting Client-Mod Patches...": "正在安装客户端 Mod 补丁...",
         "Download complete! Press 'Enter' to close the installer!": "下载完成！按下'回车'关闭安装程序！",
         "failed to patch steam check": "无法安装steam检查补丁",
         "failed to patch version check": "无法安装版本检查补丁",
         "failed to patch movement clamp": "无法安装移动限制补丁",
-        "Error while downloading": "下载时出错"
+        "Error while downloading": "下载时出错",
+        "update required, please press enter to download the update.": "需要更新，请按下回车键下载更新。",
+        "Skip Download? (y/N)": "跳过下载？（y/N）",
+        "Please enter your CS:GO installation path": "请输入你的CS:GO安装路径",
+        "For example like D:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive": "例如 D:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive",
+        "Invalid CS:GO installation path! Should end with 'Counter-Strike Global Offensive'": "无效的CS:GO安装路径！应该以'Counter-Strike Global Offensive'结尾",
+        "Do you want to install client patch? (Y/n)": "你想安装客户端补丁吗？（Y/n）",
+        "Starting Client Patch...": "正在安装客户端补丁...",
+        "Starting Movement Patch...": "正在安装服务器移动补丁..."
     },
     "en-US": {}
 }

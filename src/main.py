@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 14:59:58
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-12 19:07:41
+# @Last Modified time: 2023-09-13 02:47:19
 import asyncio
 
 from translate import Translator
@@ -19,35 +19,45 @@ from patcher import Patcher
 
 
 async def main():
-    # needs_update = await Downloader.needs_update()
+    needs_update = await Downloader.needs_update()
 
-    # if needs_update:
-    #     print("update required, please press enter to download the update.")
-    #     input()
-    #     await Downloader.update_installer()
+    if needs_update:
+        print(t("update required, please press enter to download the update."))
+        input("> ")
+        await Downloader.update_installer()
 
-    print(t("Preparing Download..."))
-    await Downloader.prepare_download()
-    print(t("Prepared Download!"))
-    Patcher.clean_patch_files()
-    print(t("Starting Download..."))
-    await Downloader.download_cs2()
+    skip_download = input(t("Skip Download? (y/N)"))
+    skip_download = skip_download.lower()
+    if "n" in skip_download or len(skip_download) == 0:
+        print(t("Preparing Download..."))
+        await Downloader.prepare_download()
+        print(t("Prepared Download!"))
+        Patcher.clean_patch_files()
+        print(t("Starting Download..."))
+        await Downloader.download_cs2()
+
     print(t("Finished Download!. Starting Patches..."))
-    Patcher.patch_client()
+    print(t("Do you want to install client patch? (Y/n)"))
+    need_patch = input("> ")
+    if "y" in need_patch.lower() or len(need_patch) == 0:
+        print(t("Starting Client Patch..."))
+        Patcher.patch_client()
 
-    wants_movement_patch = input(
+    print(
         t(
-            "Do you want to install the Movement Patch?(This is recommended for bhop/surf servers for better movement)\nPress 'Y' for 'Yes' or 'N' for 'No' on your keyboard"
+            "Do you want to install the Movement Patch?(This is recommended for bhop/surf servers for better movement) (y/N))"
         )
     )
-
-    wants_movement_patch = wants_movement_patch.lower()
-
+    wants_movement_patch = input("> ").lower()
     if "y" in wants_movement_patch:
+        print(t("Starting Movement Patch..."))
         Patcher.patch_server()
 
-    print(t("Finished Patches! Starting Client-Mod Patches... This can take a long time..."))
-    await Downloader.download_mods()
+    print(t("Do you want to install Client-Mod Patches? (Y/n)"))
+    need_patch = input("> ").lower()
+    if "y" in need_patch or len(need_patch) == 0:
+        print(t("Starting Client-Mod Patches..."))
+        await Downloader.download_mods()
     print(t("Download complete! Press 'Enter' to close the installer!"))
     input("> ")
 
