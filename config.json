@@ -1,0 +1,7 @@
+{
+    "current_version": "3.2",
+    "uses_no_manifests": false,
+    "resources_base_url": "https://github.com/AndersonBY/cs2-installer-py/raw/main/",
+    "cs2_target_path": "./cs2",
+    "language": "zh-CN"
+}

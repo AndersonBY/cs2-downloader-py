@@ -1,0 +1,18 @@
+[project]
+authors = [
+  {name = "MakerBi", email = "andersonby@163.com"},
+]
+dependencies = [
+  "httpx>=0.25.0",
+  "pyinstaller>=5.11.0",
+]
+description = ""
+license = {text = "MIT"}
+name = ""
+readme = "README.md"
+requires-python = ">=3.8.1,<3.12"
+version = ""
+
+[tool.pdm.scripts]
+build = "pyinstaller main.spec --noconfirm"
+dev = "python src/main.py"
