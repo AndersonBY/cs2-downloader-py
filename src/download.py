@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:02:02
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-13 02:48:23
+# @Last Modified time: 2023-09-13 12:01:58
 import re
 import os
 import json
@@ -18,7 +18,7 @@ from translate import Translator
 translator = Translator()
 t = translator.t
 
-with open("./config.json", "r") as f:
+with open("./config.json", "r", encoding="utf-8") as f:
     config = json.load(f)
 
 
@@ -52,7 +52,7 @@ def get_cs2_target_path():
             cs2_target_path = ""
         else:
             cs2_target_path_valid = True
-            with open("./config.json", "w") as f:
+            with open("./config.json", "w", encoding="utf-8") as f:
                 config["cs2_target_path"] = cs2_target_path
                 json.dump(config, f, indent=4)
 

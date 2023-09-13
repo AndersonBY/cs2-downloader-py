@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:12:40
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-13 02:47:31
+# @Last Modified time: 2023-09-13 12:02:15
 import os
 import mmap
 import json
@@ -14,7 +14,7 @@ from translate import Translator
 translator = Translator()
 t = translator.t
 
-with open("./config.json", "r") as f:
+with open("./config.json", "r", encoding="utf-8") as f:
     config = json.load(f)
 
 cs2_target_path = Path(config["cs2_target_path"])

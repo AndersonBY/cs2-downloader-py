@@ -6,7 +6,7 @@ groups = ["default"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:ec6d320ae704dc14d5e4964a8d34537187f1dc01c4fe7571ab8bfb704025b8be"
+content_hash = "sha256:64c534933a7a1b51eea4f31caeccf79c4d238fe8b9865f7b00a0d0083c99c044"
 
 [[package]]
 name = "altgraph"
