@@ -5,6 +5,6 @@
 @echo off
 color 6
 echo Starting Counter-Strike: 2...
-start "" "game\bin\win64\cs2.exe" -condebug -novid -console -insecure
+start "" "game\bin\win64\cs2.exe" -novid -insecure
 timeout /t 5 /nobreak
 exit
