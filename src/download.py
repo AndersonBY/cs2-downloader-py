@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 15:02:02
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-13 12:01:58
+# @Last Modified time: 2023-09-14 11:45:26
 import re
 import os
 import json
@@ -119,15 +119,11 @@ class Downloader:
         cmd = f'"{exe_path.absolute()}" --remove_files=False --target "{Downloader.cs2_target_path.absolute()}" --manifests "{manifest_folder.absolute()}" --depot_keys "{depot_keys.absolute()}"'
         print(cmd)
         subprocess.run(cmd, shell=True)
-
+    
     @staticmethod
-    async def download_mods():
-        cs2_target_path = Path(config["cs2_target_path"])
-        github_paths = [
-            "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/game/csgo_mods/pak01_000.vpk",
-            "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/game/csgo_mods/pak01_dir.vpk",
-            "https://raw.githubusercontent.com/CS2-OOF-LV/CS2-Client-Files/main/Mod%20Loading%20Files/game/csgo/gameinfo.gi",
-            "https://raw.githubusercontent.com/CS2-OOF-LV/CS2-Client-Files/main/Mod%20Loading%20Files/game/csgo/scripts/vscripts/banList.lua",
+    async def download_start_bat():
+        cs2_target_path = Downloader.cs2_target_path
+        remote_paths = [
             "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/Start%20Game%20(English)%20-%20DEBUG.bat",
             "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/Start%20Game%20(English).bat",
             "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/Start%20Server.bat",
@@ -137,16 +133,32 @@ class Downloader:
         ]
 
         file_paths = [
-            cs2_target_path / "game" / "csgo_mods" / "pak01_000.vpk",
-            cs2_target_path / "game" / "csgo_mods" / "pak01_dir.vpk",
-            cs2_target_path / "game" / "csgo" / "gameinfo.gi",
-            cs2_target_path / "game" / "csgo" / "scripts" / "vscripts" / "banList.lua",
             cs2_target_path / "Start Game (English) - DEBUG.bat",
             cs2_target_path / "Start Game (English).bat",
             cs2_target_path / "Start Server.bat",
             cs2_target_path / "Workshop Tools - RAYTRACING.bat",
             cs2_target_path / "Workshop Tools.bat",
             cs2_target_path / "启动CS2.bat",
+        ]
+
+        for remote_path, file_path in zip(remote_paths, file_paths):
+            await Downloader.download_file(remote_path, file_path)
+
+    @staticmethod
+    async def download_mods():
+        cs2_target_path = Path(config["cs2_target_path"])
+        github_paths = [
+            "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/game/csgo_mods/pak01_000.vpk",
+            "https://github.com/CS2-OOF-LV/CS2-Client-Files/raw/main/Mod%20Loading%20Files/game/csgo_mods/pak01_dir.vpk",
+            # "https://raw.githubusercontent.com/CS2-OOF-LV/CS2-Client-Files/main/Mod%20Loading%20Files/game/csgo/gameinfo.gi",
+            "https://raw.githubusercontent.com/CS2-OOF-LV/CS2-Client-Files/main/Mod%20Loading%20Files/game/csgo/scripts/vscripts/banList.lua",
+        ]
+
+        file_paths = [
+            cs2_target_path / "game" / "csgo_mods" / "pak01_000.vpk",
+            cs2_target_path / "game" / "csgo_mods" / "pak01_dir.vpk",
+            # cs2_target_path / "game" / "csgo" / "gameinfo.gi",
+            cs2_target_path / "game" / "csgo" / "scripts" / "vscripts" / "banList.lua",
         ]
 
         replace_exception_list = ["banList.lua"]

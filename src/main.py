@@ -2,7 +2,7 @@
 # @Author: Bi Ying
 # @Date:   2023-09-12 14:59:58
 # @Last Modified by:   Bi Ying
-# @Last Modified time: 2023-09-13 02:47:19
+# @Last Modified time: 2023-09-14 11:46:00
 import asyncio
 
 from translate import Translator
@@ -58,6 +58,9 @@ async def main():
     if "y" in need_patch or len(need_patch) == 0:
         print(t("Starting Client-Mod Patches..."))
         await Downloader.download_mods()
+
+    await Downloader.download_start_bat()
+
     print(t("Download complete! Press 'Enter' to close the installer!"))
     input("> ")
 
